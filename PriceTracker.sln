@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Common", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Bot", "src\Presentation\PriceTracker.Bot\PriceTracker.Bot.csproj", "{A75F5176-1ED5-43C3-8805-5B3D56C751AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Settings", "src\Shared\PriceTracker.Settings\PriceTracker.Settings.csproj", "{7D35036F-C2D7-4AB5-9648-356643D623FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,7 @@ Global
 		{24CFB59D-932F-441F-8ED5-1089CA8A5C13} = {0190D45D-5D4F-4199-9A38-3B2F4E419A4F}
 		{F1EF7FD5-29CB-4DC3-BEC9-FF3E7DC5766A} = {26085DFC-412D-43EF-8D19-693475B2ED81}
 		{A75F5176-1ED5-43C3-8805-5B3D56C751AD} = {993C3FEA-45B5-4C0C-B569-91566FA84215}
+		{7D35036F-C2D7-4AB5-9648-356643D623FA} = {26085DFC-412D-43EF-8D19-693475B2ED81}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{52523E20-E623-4849-91E4-FA46B09169D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -62,5 +65,9 @@ Global
 		{A75F5176-1ED5-43C3-8805-5B3D56C751AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A75F5176-1ED5-43C3-8805-5B3D56C751AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A75F5176-1ED5-43C3-8805-5B3D56C751AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D35036F-C2D7-4AB5-9648-356643D623FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D35036F-C2D7-4AB5-9648-356643D623FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D35036F-C2D7-4AB5-9648-356643D623FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D35036F-C2D7-4AB5-9648-356643D623FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  price_tracker_postgres:
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=MJvqtCv9l3tH3ts
+    ports:
+      - "54321:5432"
+    networks: 
+      - shared_price_tracker
+    volumes:
+      - ~/.docker-crm/postgresql_14.1/data/:/var/lib/postgresql/data
+  
+  price_tracker_bot:
+    ports:
+      - "10000:80"
+    networks:
+      - shared_price_tracker
+    env_file:
+      - env.bot
+      
+
+networks:
+  shared_price_tracker:
+    driver: bridge

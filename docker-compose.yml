@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  price_tracker_postgres:
+    image: postgres:14.1-alpine
+  
+  price_tracker_bot:
+    image: ${DECKER_REGISTRY-}price-tracker-bot
+    build:
+      context: .
+      dockerfile: src/Presentation/PriceTracker.Bot/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on: 
+      - price_tracker_postgres
