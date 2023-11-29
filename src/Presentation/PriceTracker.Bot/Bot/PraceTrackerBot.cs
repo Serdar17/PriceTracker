@@ -1,6 +1,12 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Options;
+using PriceTracker.Bot.Bot.Commands;
+using PriceTracker.Bot.Bot.Factory;
 using PriceTracker.Bot.Options;
 using PriceTracker.Common.Constants;
+using PriceTracker.Domain.Entities;
+using PriceTracker.Infrastructure.Context;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
@@ -14,9 +20,15 @@ public class PriceTrackerBot
 {
     private readonly TelegramBotSettings _settings;
     private readonly TelegramBotClient _client;
+    private readonly ICommandHandlerFactory _factory;
+    private readonly IDbContextFactory<AppDbContext> _contextFactory;
     
-    public PriceTrackerBot(IOptions<TelegramBotSettings> optionsSnapshot)
+    public PriceTrackerBot(IOptions<TelegramBotSettings> optionsSnapshot,
+        ICommandHandlerFactory factory, 
+        IDbContextFactory<AppDbContext> contextFactory)
     {
+        _factory = factory;
+        _contextFactory = contextFactory;
         _settings = optionsSnapshot.Value;
         _client = new TelegramBotClient(_settings.Token);
 
@@ -41,57 +53,39 @@ public class PriceTrackerBot
         CancellationToken cancellationToken)
     {
         if (update.CallbackQuery is not null)
-        {
             await HandleCallbackQueryAsync(botClient, update.CallbackQuery, cancellationToken);
-        }
         
         if (update.Message is not { } message)
             return;
         
         if (message.Text is not { } messageText)
             return;
-        
-        var user = message.From;
-        Console.WriteLine("Message from user = " + message.From);
-        
-        var chatId = message.Chat.Id;
 
-        Console.WriteLine($"Received a '{messageText}' message in chat {chatId}.");
-
-        if (messageText.ToLower().Equals(MenuCommands.Add))
-        { 
-            var keyboards = new InlineKeyboardMarkup(new[]
-            {
-                new[]
-                {
-                    InlineKeyboardButton.WithCallbackData("Ozon"),
-                },
-            });
-
-            var sentMessage = await botClient.SendTextMessageAsync(
-                chatId: chatId,
-                text: "Выберите доступный сайт для парсинга цены",
-                replyMarkup: keyboards,
-                cancellationToken: cancellationToken);
-        }
+        if (message.ReplyToMessage is not null)
+            await HandleReplyToMessageAsync(message, cancellationToken);
         
-        // Message sentMessage = await botClient.SendTextMessageAsync(
-        //     chatId: chatId,
-        //     text: "You said:\n" + messageText,
-        //     cancellationToken: cancellationToken);
-        
-        // var sentMessage = await botClient.SendTextMessageAsync(
-        //     chatId: chatId,
-        //     text: "Trying *all the parameters* of `sendMessage` method",
-        //     parseMode: ParseMode.MarkdownV2,
-        //     disableNotification: true,
-        //     replyToMessageId: update.Message.MessageId,
-        //     replyMarkup: new InlineKeyboardMarkup(
-        //         InlineKeyboardButton.WithUrl(
-        //             text: "Check sendMessage method",
-        //             url: "https://core.telegram.org/bots/api#sendmessage")
-        //         ),
-        //     cancellationToken: cancellationToken);
+        var command = _factory.CreateHandler(messageText.ToLower());
+
+        if (command is not null)
+            await command.HandleAsync(botClient, update, cancellationToken);
+    }
+
+    private async Task HandleReplyToMessageAsync(Message message, CancellationToken cancellationToken)
+    {
+        var replyToMessage = message.ReplyToMessage!.Text;
+        var link = message.Text;
+        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        var user = context.Users.FirstOrDefault(x => x.Id.Equals(message.From!.Id));
+        var marketPlaceName = replyToMessage!.Split()[^1];
+        var site = new Site(marketPlaceName, link);
+        user.Sites.Add(site);
+        context.Users.Update(user);
+        await context.SaveChangesAsync(cancellationToken);
+
+        await _client.SendTextMessageAsync(
+            message.Chat.Id,
+            "Товар успешно добавлен, ожидайте изменение цены!",
+            cancellationToken: cancellationToken);
     }
 
     private async Task HandleCallbackQueryAsync(
@@ -104,11 +98,6 @@ public class PriceTrackerBot
         
         if (callbackQuery.Message is not { } message)
             return;
-        
-        // var sentMessage = await botClient.SendTextMessageAsync(
-        //     chatId: message.Chat.Id,
-        //     text: "Вставьте ссылку на товар",
-        //     cancellationToken: cancellationToken);
         
         await botClient.SendTextMessageAsync(
             message.Chat.Id,

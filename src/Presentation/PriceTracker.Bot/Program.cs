@@ -1,5 +1,6 @@
 using PriceTracker.Bot;
 using PriceTracker.Bot.Bot;
+using PriceTracker.Bot.Bot.Commands;
 using PriceTracker.Bot.Options;
 using PriceTracker.Infrastructure.Context.Setup;
 
