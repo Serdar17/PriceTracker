@@ -1,16 +1,18 @@
 using PriceTracker.Bot;
 using PriceTracker.Bot.Bot;
-using PriceTracker.Bot.Bot.Commands;
+using PriceTracker.Bot.Configuration;
 using PriceTracker.Bot.Options;
 using PriceTracker.Infrastructure.Context.Setup;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+builder.AddAppLogger();
 
 builder.Services.Configure<TelegramBotSettings>(
     builder.Configuration.GetSection(TelegramBotSettings.SectionName));
 
-builder.Services.AddSingleton<PriceTrackerBot>();
-builder.Services.RegisterAppServices();
+services.AddSingleton<PriceTrackerBot>();
+services.RegisterAppServices();
 
 var app = builder.Build();
 

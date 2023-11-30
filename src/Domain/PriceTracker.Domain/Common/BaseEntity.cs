@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PriceTracker.Domain.Base;
+namespace PriceTracker.Domain.Common;
 
 public abstract class BaseEntity<T>
 {

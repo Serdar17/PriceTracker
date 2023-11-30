@@ -1,4 +1,4 @@
-﻿using PriceTracker.Domain.Base;
+﻿using PriceTracker.Domain.Common;
 
 namespace PriceTracker.Domain.Entities;
 

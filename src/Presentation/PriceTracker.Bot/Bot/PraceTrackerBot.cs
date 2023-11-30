@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Options;
-using PriceTracker.Bot.Bot.Commands;
 using PriceTracker.Bot.Bot.Factory;
 using PriceTracker.Bot.Options;
-using PriceTracker.Common.Constants;
 using PriceTracker.Domain.Entities;
 using PriceTracker.Infrastructure.Context;
 using Telegram.Bot;
