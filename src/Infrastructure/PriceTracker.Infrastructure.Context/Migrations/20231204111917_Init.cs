@@ -21,6 +21,8 @@ namespace PriceTracker.Infrastructure.Context.Migrations
                     first_name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     last_name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
                     username = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
+                    chat_id = table.Column<long>(type: "bigint", nullable: false),
+                    status = table.Column<int>(type: "integer", nullable: false),
                     create_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     update_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
@@ -30,12 +32,13 @@ namespace PriceTracker.Infrastructure.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "sites",
+                name: "products",
                 columns: table => new
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    market_place_name = table.Column<string>(type: "text", nullable: false),
+                    title = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     link = table.Column<string>(type: "text", nullable: false),
                     user_id = table.Column<long>(type: "bigint", nullable: false),
                     create_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -43,9 +46,9 @@ namespace PriceTracker.Infrastructure.Context.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_sites", x => x.id);
+                    table.PrimaryKey("pk_products", x => x.id);
                     table.ForeignKey(
-                        name: "fk_sites_user_user_id",
+                        name: "fk_products_users_user_id",
                         column: x => x.user_id,
                         principalTable: "users",
                         principalColumn: "id",
@@ -60,7 +63,7 @@ namespace PriceTracker.Infrastructure.Context.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     current_price = table.Column<decimal>(type: "numeric", nullable: false),
                     discounted_price = table.Column<decimal>(type: "numeric", nullable: false),
-                    site_id = table.Column<long>(type: "bigint", nullable: false),
+                    product_id = table.Column<long>(type: "bigint", nullable: false),
                     create_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     update_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
@@ -68,21 +71,21 @@ namespace PriceTracker.Infrastructure.Context.Migrations
                 {
                     table.PrimaryKey("pk_prices", x => x.id);
                     table.ForeignKey(
-                        name: "fk_prices_site_site_id",
-                        column: x => x.site_id,
-                        principalTable: "sites",
+                        name: "fk_prices_sites_product_id",
+                        column: x => x.product_id,
+                        principalTable: "products",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_prices_site_id",
+                name: "ix_prices_product_id",
                 table: "prices",
-                column: "site_id");
+                column: "product_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_sites_user_id",
-                table: "sites",
+                name: "ix_products_user_id",
+                table: "products",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
@@ -98,7 +101,7 @@ namespace PriceTracker.Infrastructure.Context.Migrations
                 name: "prices");
 
             migrationBuilder.DropTable(
-                name: "sites");
+                name: "products");
 
             migrationBuilder.DropTable(
                 name: "users");

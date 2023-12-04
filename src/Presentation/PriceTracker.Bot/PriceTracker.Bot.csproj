@@ -19,6 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Infrastructure\PriceTracker.BackgroundJob\PriceTracker.BackgroundJob.csproj" />
       <ProjectReference Include="..\..\Infrastructure\PriceTracker.Infrastructure.Context\PriceTracker.Infrastructure.Context.csproj" />
       <ProjectReference Include="..\..\Shared\PriceTracker.Common\PriceTracker.Common.csproj" />
     </ItemGroup>

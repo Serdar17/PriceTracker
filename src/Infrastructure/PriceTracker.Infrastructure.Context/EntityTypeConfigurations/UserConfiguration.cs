@@ -16,7 +16,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasIndex(x => x.Username);
 
-        builder.HasMany(x => x.Sites)
+        builder.HasMany(x => x.Products)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Restrict);

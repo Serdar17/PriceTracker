@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PriceTracker.Common.Constants;
 using PriceTracker.Infrastructure.Context;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -22,23 +23,23 @@ public class AddCommandHandler : ICommandHandler
     {
         if (update.Message is not { } message)
             return;
-        
-        var keyboards = new InlineKeyboardMarkup(new[]
-        {
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Ozon"),
-            },
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData("Wildberries"),
-            },
-        });
+
+        var keyboards = GetInlineKeyboardMarkup();
 
         var sentMessage = await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: "Выберите доступный сайт для парсинга цены",
             replyMarkup: keyboards,
             cancellationToken: cancellationToken);
+    }
+
+    private InlineKeyboardMarkup GetInlineKeyboardMarkup()
+    {
+        var places = MarketPlace.AvailableMarketPlaces;
+        var keyboards = places
+            .Select(t => new List<InlineKeyboardButton> { InlineKeyboardButton.WithCallbackData(t), })
+            .ToList();
+
+        return new InlineKeyboardMarkup(keyboards);
     }
 }

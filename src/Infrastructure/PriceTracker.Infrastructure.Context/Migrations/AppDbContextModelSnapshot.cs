@@ -43,9 +43,9 @@ namespace PriceTracker.Infrastructure.Context.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("discounted_price");
 
-                    b.Property<long>("SiteId")
+                    b.Property<long>("ProductId")
                         .HasColumnType("bigint")
-                        .HasColumnName("site_id");
+                        .HasColumnName("product_id");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone")
@@ -54,13 +54,13 @@ namespace PriceTracker.Infrastructure.Context.Migrations
                     b.HasKey("Id")
                         .HasName("pk_prices");
 
-                    b.HasIndex("SiteId")
-                        .HasDatabaseName("ix_prices_site_id");
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_prices_product_id");
 
                     b.ToTable("prices", (string)null);
                 });
 
-            modelBuilder.Entity("PriceTracker.Domain.Entities.Site", b =>
+            modelBuilder.Entity("PriceTracker.Domain.Entities.Product", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,11 +78,16 @@ namespace PriceTracker.Infrastructure.Context.Migrations
                         .HasColumnType("text")
                         .HasColumnName("link");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("MarketPlaceName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("market_place_name");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)")
-                        .HasColumnName("name");
+                        .HasColumnName("title");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone")
@@ -93,12 +98,12 @@ namespace PriceTracker.Infrastructure.Context.Migrations
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_sites");
+                        .HasName("pk_products");
 
                     b.HasIndex("UserId")
-                        .HasDatabaseName("ix_sites_user_id");
+                        .HasDatabaseName("ix_products_user_id");
 
-                    b.ToTable("sites", (string)null);
+                    b.ToTable("products", (string)null);
                 });
 
             modelBuilder.Entity("PriceTracker.Domain.Entities.User", b =>
@@ -153,36 +158,36 @@ namespace PriceTracker.Infrastructure.Context.Migrations
 
             modelBuilder.Entity("PriceTracker.Domain.Entities.Price", b =>
                 {
-                    b.HasOne("PriceTracker.Domain.Entities.Site", "Site")
+                    b.HasOne("PriceTracker.Domain.Entities.Product", "Product")
                         .WithMany("Prices")
-                        .HasForeignKey("SiteId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_prices_sites_site_id");
+                        .HasConstraintName("fk_prices_sites_product_id");
 
-                    b.Navigation("Site");
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("PriceTracker.Domain.Entities.Site", b =>
+            modelBuilder.Entity("PriceTracker.Domain.Entities.Product", b =>
                 {
                     b.HasOne("PriceTracker.Domain.Entities.User", "User")
-                        .WithMany("Sites")
+                        .WithMany("Products")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("fk_sites_users_user_id");
+                        .HasConstraintName("fk_products_users_user_id");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PriceTracker.Domain.Entities.Site", b =>
+            modelBuilder.Entity("PriceTracker.Domain.Entities.Product", b =>
                 {
                     b.Navigation("Prices");
                 });
 
             modelBuilder.Entity("PriceTracker.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Sites");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

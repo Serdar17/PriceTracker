@@ -26,6 +26,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Bot", "src\Pre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Settings", "src\Shared\PriceTracker.Settings\PriceTracker.Settings.csproj", "{7D35036F-C2D7-4AB5-9648-356643D623FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.BackgroundJob", "src\Infrastructure\PriceTracker.BackgroundJob\PriceTracker.BackgroundJob.csproj", "{76BFE77B-705D-4AA9-9B0B-462236AE593F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Parser", "src\Shared\PriceTracker.Parser\PriceTracker.Parser.csproj", "{2CDECC99-469E-4EB8-831B-5026DFC64091}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,8 @@ Global
 		{F1EF7FD5-29CB-4DC3-BEC9-FF3E7DC5766A} = {26085DFC-412D-43EF-8D19-693475B2ED81}
 		{A75F5176-1ED5-43C3-8805-5B3D56C751AD} = {993C3FEA-45B5-4C0C-B569-91566FA84215}
 		{7D35036F-C2D7-4AB5-9648-356643D623FA} = {26085DFC-412D-43EF-8D19-693475B2ED81}
+		{76BFE77B-705D-4AA9-9B0B-462236AE593F} = {0190D45D-5D4F-4199-9A38-3B2F4E419A4F}
+		{2CDECC99-469E-4EB8-831B-5026DFC64091} = {26085DFC-412D-43EF-8D19-693475B2ED81}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{52523E20-E623-4849-91E4-FA46B09169D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -69,5 +75,13 @@ Global
 		{7D35036F-C2D7-4AB5-9648-356643D623FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D35036F-C2D7-4AB5-9648-356643D623FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D35036F-C2D7-4AB5-9648-356643D623FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76BFE77B-705D-4AA9-9B0B-462236AE593F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76BFE77B-705D-4AA9-9B0B-462236AE593F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76BFE77B-705D-4AA9-9B0B-462236AE593F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76BFE77B-705D-4AA9-9B0B-462236AE593F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CDECC99-469E-4EB8-831B-5026DFC64091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CDECC99-469E-4EB8-831B-5026DFC64091}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CDECC99-469E-4EB8-831B-5026DFC64091}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CDECC99-469E-4EB8-831B-5026DFC64091}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

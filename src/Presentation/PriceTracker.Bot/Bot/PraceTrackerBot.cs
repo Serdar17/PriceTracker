@@ -19,13 +19,16 @@ public class PriceTrackerBot
     private readonly TelegramBotClient _client;
     private readonly ICommandHandlerFactory _factory;
     private readonly IDbContextFactory<AppDbContext> _contextFactory;
+    private readonly ILogger<PriceTrackerBot> _logger;
     
     public PriceTrackerBot(IOptions<TelegramBotSettings> optionsSnapshot,
         ICommandHandlerFactory factory, 
-        IDbContextFactory<AppDbContext> contextFactory)
+        IDbContextFactory<AppDbContext> contextFactory, 
+        ILogger<PriceTrackerBot> logger)
     {
         _factory = factory;
         _contextFactory = contextFactory;
+        _logger = logger;
         _settings = optionsSnapshot.Value;
         _client = new TelegramBotClient(_settings.Token);
 
@@ -74,8 +77,8 @@ public class PriceTrackerBot
         await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
         var user = context.Users.FirstOrDefault(x => x.Id.Equals(message.From!.Id));
         var marketPlaceName = replyToMessage!.Split()[^1];
-        var site = new Site(marketPlaceName, link);
-        user.Sites.Add(site);
+        var site = new Product(marketPlaceName, link);
+        user!.Products.Add(site);
         context.Users.Update(user);
         await context.SaveChangesAsync(cancellationToken);
 
@@ -116,6 +119,6 @@ public class PriceTrackerBot
             _ => exception.ToString()
         };
 
-        Console.WriteLine(errorMessage);
+        _logger.LogError("Price tracker Bot error {ApiErrorMessage}", errorMessage);
     }
 }

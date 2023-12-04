@@ -1,4 +1,5 @@
-﻿using PriceTracker.Bot.Bot.Commands;
+﻿using PriceTracker.BackgroundJob;
+using PriceTracker.Bot.Bot.Commands;
 using PriceTracker.Bot.Bot.Factory;
 using PriceTracker.Bot.Configuration;
 using PriceTracker.Infrastructure.Context;
@@ -13,9 +14,11 @@ public static class DependencyInjection
             .AddTransient<ICommandHandler, StartCommandHandler>()
             .AddTransient<ICommandHandler, AddCommandHandler>()
             .AddTransient<ICommandHandlerFactory, CommandHandlerFactory>();
+       
         services
             .AddAppDbContext()
             .AddAppAutoMappers()
+            .AddBackgroundJob()
             ;
         
         return services;

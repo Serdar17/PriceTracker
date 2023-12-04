@@ -11,5 +11,5 @@ public class User : BaseEntity<long>
     public long ChatId { get; set; }
     public UserStatus Status { get; set; }
 
-    public ICollection<Site> Sites { get; set; } = new List<Site>();
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }
