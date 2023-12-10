@@ -6,7 +6,7 @@ namespace PriceTracker.Infrastructure.Context;
 public class AppDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<Product> Sites { get; set; }
+    public DbSet<Product> Products { get; set; }
     public DbSet<Price> Prices { get; set; }
     
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

@@ -1,18 +1,17 @@
-﻿using PriceTracker.Bot.Bot.Commands;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PriceTracker.Commands.Commands;
 using PriceTracker.Common.Constants;
 
-namespace PriceTracker.Bot.Bot.Factory;
+namespace PriceTracker.Commands.Factory;
 
 public class CommandHandlerFactory : ICommandHandlerFactory
 {
-    private readonly IServiceScope _scope;
     private readonly IEnumerable<ICommandHandler> _commands;
 
     public CommandHandlerFactory(IServiceProvider provider)
     {
         ArgumentNullException.ThrowIfNull(provider);
-        _scope = provider.CreateScope();
-        _commands = _scope.ServiceProvider.GetServices<ICommandHandler>();
+        _commands = provider.CreateScope().ServiceProvider.GetServices<ICommandHandler>();
     }
 
     public ICommandHandler? CreateHandler(string command)
@@ -23,6 +22,8 @@ public class CommandHandlerFactory : ICommandHandlerFactory
                 return _commands.First(x => x is StartCommandHandler);
             case MenuCommands.Add:
                 return _commands.First(x => x is AddCommandHandler);
+            case MenuCommands.Remove:
+                return _commands.First(x => x is RemoveCommandHandler);
             default:
                 return null;
         }

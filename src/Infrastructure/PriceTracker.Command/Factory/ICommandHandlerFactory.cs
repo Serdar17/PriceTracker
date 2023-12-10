@@ -1,6 +1,6 @@
-﻿using PriceTracker.Bot.Bot.Commands;
+﻿using PriceTracker.Commands.Commands;
 
-namespace PriceTracker.Bot.Bot.Factory;
+namespace PriceTracker.Commands.Factory;
 
 public interface ICommandHandlerFactory
 {

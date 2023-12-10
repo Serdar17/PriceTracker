@@ -1,21 +1,20 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using PriceTracker.Infrastructure.Context;
+using PriceTracker.Services.User;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using User = PriceTracker.Domain.Entities.User;
 
-namespace PriceTracker.Bot.Bot.Commands;
+namespace PriceTracker.Commands.Commands;
 
 public class StartCommandHandler : ICommandHandler
 {
-    private readonly IDbContextFactory<AppDbContext> _factory;
+    private readonly IUserService _userService;
     private readonly IMapper _mapper;
 
-    public StartCommandHandler(IDbContextFactory<AppDbContext> factory, IMapper mapper)
+    public StartCommandHandler(IMapper mapper, IUserService userService)
     {
-        _factory = factory;
         _mapper = mapper;
+        _userService = userService;
     }
 
     public async Task HandleAsync(
@@ -26,7 +25,8 @@ public class StartCommandHandler : ICommandHandler
         if (update.Message is not { } message)
             return;
 
-        await CreateUserIfNotExistsAsync(message, cancellationToken);
+        var user = _mapper.Map<User>(message.From);
+        await _userService.CreateUserAsync(user, cancellationToken);
 
         var sentMessage = await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
@@ -35,16 +35,9 @@ public class StartCommandHandler : ICommandHandler
             cancellationToken: cancellationToken);
     }
 
-    private async Task CreateUserIfNotExistsAsync(Message message, CancellationToken cancellationToken = default)
+    public Task HandleCallbackQueryAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery,
+        CancellationToken cancellationToken = default)
     {
-        var currentUser = message.From;
-        await using var context = await _factory.CreateDbContextAsync(cancellationToken);
-        var existUser = context.Users.FirstOrDefault(x => x.Id.Equals(currentUser!.Id));
-        if (existUser is null)
-        {
-            var user = _mapper.Map<User>(currentUser);
-            context.Users.Add(user);
-            await context.SaveChangesAsync(cancellationToken);
-        }
+        throw new NotImplementedException();
     }
 }

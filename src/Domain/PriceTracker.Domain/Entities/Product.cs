@@ -4,7 +4,7 @@ namespace PriceTracker.Domain.Entities;
 
 public class Product : BaseEntity<long>
 {
-    public string MarketPlaceName { get; set; }
+    public string MarketPlaceName { get; set; } = string.Empty;
     public string Title { get; set; }
     public string Link { get; set; }
 

@@ -11,7 +11,6 @@ public static class DependencyInjection
     {
         var settings = PriceTracker.Settings.Settings.Load<DbSettings>(DbSettings.SectionName);
         services.AddSingleton(settings);
-        Console.WriteLine(settings.ConnectionString);
 
         var dbInitOptionsDelegate = DbContextOptionsFactory.Configure(settings.ConnectionString);
         services.AddDbContextFactory<AppDbContext>(dbInitOptionsDelegate);

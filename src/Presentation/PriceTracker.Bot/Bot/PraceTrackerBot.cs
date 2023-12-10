@@ -1,36 +1,40 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using PriceTracker.Bot.Bot.Factory;
 using PriceTracker.Bot.Options;
+using PriceTracker.Commands.Factory;
 using PriceTracker.Domain.Entities;
 using PriceTracker.Infrastructure.Context;
+using PriceTracker.Services.User;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace PriceTracker.Bot.Bot;
 
 public class PriceTrackerBot
 {
-    private readonly TelegramBotSettings _settings;
     private readonly TelegramBotClient _client;
     private readonly ICommandHandlerFactory _factory;
     private readonly IDbContextFactory<AppDbContext> _contextFactory;
     private readonly ILogger<PriceTrackerBot> _logger;
+    private readonly IMapper _mapper;
+    private readonly IUserService _userService;
     
     public PriceTrackerBot(IOptions<TelegramBotSettings> optionsSnapshot,
         ICommandHandlerFactory factory, 
         IDbContextFactory<AppDbContext> contextFactory, 
-        ILogger<PriceTrackerBot> logger)
+        ILogger<PriceTrackerBot> logger, IMapper mapper, IUserService userService)
     {
         _factory = factory;
         _contextFactory = contextFactory;
         _logger = logger;
-        _settings = optionsSnapshot.Value;
-        _client = new TelegramBotClient(_settings.Token);
+        _mapper = mapper;
+        _userService = userService;
+        var settings = optionsSnapshot.Value;
+        _client = new TelegramBotClient(settings.Token);
 
         ReceiverOptions receiverOptions = new()
         {
@@ -73,15 +77,10 @@ public class PriceTrackerBot
     private async Task HandleReplyToMessageAsync(Message message, CancellationToken cancellationToken)
     {
         var replyToMessage = message.ReplyToMessage!.Text;
-        var link = message.Text;
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
-        var user = context.Users.FirstOrDefault(x => x.Id.Equals(message.From!.Id));
         var marketPlaceName = replyToMessage!.Split()[^1];
-        var site = new Product(marketPlaceName, link);
-        user!.Products.Add(site);
-        context.Users.Update(user);
-        await context.SaveChangesAsync(cancellationToken);
-
+        var product = new Product(marketPlaceName, message.Text);
+        await _userService.AddProductToUserAsync(message.From.Id, product, cancellationToken);
+        
         await _client.SendTextMessageAsync(
             message.Chat.Id,
             "Товар успешно добавлен, ожидайте изменение цены!",
@@ -95,15 +94,12 @@ public class PriceTrackerBot
     {
         if (callbackQuery.Data is null)
             return;
-        
-        if (callbackQuery.Message is not { } message)
-            return;
-        
-        await botClient.SendTextMessageAsync(
-            message.Chat.Id,
-            $"Пожалуйста, вставьте ссылку на товар {callbackQuery.Data}", 
-            replyMarkup: new ForceReplyMarkup(), 
-            cancellationToken: cancellationToken);
+
+        var commandName = callbackQuery.Data.Split()[0];
+        var command = _factory.CreateHandler(commandName.ToLower());
+
+        if (command is not null)
+            await command.HandleCallbackQueryAsync(botClient, callbackQuery, cancellationToken);
     }
     
     

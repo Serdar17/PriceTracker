@@ -28,7 +28,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Settings", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.BackgroundJob", "src\Infrastructure\PriceTracker.BackgroundJob\PriceTracker.BackgroundJob.csproj", "{76BFE77B-705D-4AA9-9B0B-462236AE593F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Parser", "src\Shared\PriceTracker.Parser\PriceTracker.Parser.csproj", "{2CDECC99-469E-4EB8-831B-5026DFC64091}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Services.User", "src\Services\PriceTracker.Services.User\PriceTracker.Services.User.csproj", "{A89FF85F-5138-4314-BED4-B9250B3E6B3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Services.Product", "src\Services\PriceTracker.Services.Product\PriceTracker.Services.Product.csproj", "{23D23303-B3DF-48E7-8B69-AEFCA6A7E5D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Command", "src\Infrastructure\PriceTracker.Command\PriceTracker.Command.csproj", "{568A31D3-F495-42C1-A7C0-8D0652546ACC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Services.Parser", "src\Services\PriceTracker.Services.Parser\PriceTracker.Services.Parser.csproj", "{8F78F755-66AA-44B4-8237-CA6AC77CA91A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,7 +54,10 @@ Global
 		{A75F5176-1ED5-43C3-8805-5B3D56C751AD} = {993C3FEA-45B5-4C0C-B569-91566FA84215}
 		{7D35036F-C2D7-4AB5-9648-356643D623FA} = {26085DFC-412D-43EF-8D19-693475B2ED81}
 		{76BFE77B-705D-4AA9-9B0B-462236AE593F} = {0190D45D-5D4F-4199-9A38-3B2F4E419A4F}
-		{2CDECC99-469E-4EB8-831B-5026DFC64091} = {26085DFC-412D-43EF-8D19-693475B2ED81}
+		{A89FF85F-5138-4314-BED4-B9250B3E6B3D} = {9C8777C0-2260-407D-903D-E281351AA8EA}
+		{23D23303-B3DF-48E7-8B69-AEFCA6A7E5D4} = {9C8777C0-2260-407D-903D-E281351AA8EA}
+		{568A31D3-F495-42C1-A7C0-8D0652546ACC} = {0190D45D-5D4F-4199-9A38-3B2F4E419A4F}
+		{8F78F755-66AA-44B4-8237-CA6AC77CA91A} = {9C8777C0-2260-407D-903D-E281351AA8EA}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{52523E20-E623-4849-91E4-FA46B09169D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -79,9 +88,21 @@ Global
 		{76BFE77B-705D-4AA9-9B0B-462236AE593F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76BFE77B-705D-4AA9-9B0B-462236AE593F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76BFE77B-705D-4AA9-9B0B-462236AE593F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CDECC99-469E-4EB8-831B-5026DFC64091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CDECC99-469E-4EB8-831B-5026DFC64091}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CDECC99-469E-4EB8-831B-5026DFC64091}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CDECC99-469E-4EB8-831B-5026DFC64091}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A89FF85F-5138-4314-BED4-B9250B3E6B3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A89FF85F-5138-4314-BED4-B9250B3E6B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A89FF85F-5138-4314-BED4-B9250B3E6B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A89FF85F-5138-4314-BED4-B9250B3E6B3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23D23303-B3DF-48E7-8B69-AEFCA6A7E5D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23D23303-B3DF-48E7-8B69-AEFCA6A7E5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23D23303-B3DF-48E7-8B69-AEFCA6A7E5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23D23303-B3DF-48E7-8B69-AEFCA6A7E5D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{568A31D3-F495-42C1-A7C0-8D0652546ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{568A31D3-F495-42C1-A7C0-8D0652546ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{568A31D3-F495-42C1-A7C0-8D0652546ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{568A31D3-F495-42C1-A7C0-8D0652546ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F78F755-66AA-44B4-8237-CA6AC77CA91A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F78F755-66AA-44B4-8237-CA6AC77CA91A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F78F755-66AA-44B4-8237-CA6AC77CA91A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F78F755-66AA-44B4-8237-CA6AC77CA91A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

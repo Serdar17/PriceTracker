@@ -1,19 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PriceTracker.Common.Constants;
-using PriceTracker.Infrastructure.Context;
+﻿using PriceTracker.Common.Constants;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
-namespace PriceTracker.Bot.Bot.Commands;
+namespace PriceTracker.Commands.Commands;
 
 public class AddCommandHandler : ICommandHandler
 {
-    private readonly IDbContextFactory<AppDbContext> _factory;
-
-    public AddCommandHandler(IDbContextFactory<AppDbContext> factory)
+    public AddCommandHandler()
     {
-        _factory = factory;
     }
 
     public async Task HandleAsync(
@@ -33,11 +28,31 @@ public class AddCommandHandler : ICommandHandler
             cancellationToken: cancellationToken);
     }
 
+    public async Task HandleCallbackQueryAsync(ITelegramBotClient botClient, CallbackQuery callbackQuery,
+        CancellationToken cancellationToken = default)
+    {
+        if (callbackQuery.Message is not { } message)
+            return;
+        
+        if (callbackQuery.Data is null)
+            return;
+
+        var marketplaceName = callbackQuery.Data.Split()[^1];
+        await botClient.SendTextMessageAsync(
+            message.Chat.Id,
+            $"Пожалуйста, вставьте ссылку на товар {marketplaceName}", 
+            replyMarkup: new ForceReplyMarkup(), 
+            cancellationToken: cancellationToken);
+    }
+
     private InlineKeyboardMarkup GetInlineKeyboardMarkup()
     {
         var places = MarketPlace.AvailableMarketPlaces;
         var keyboards = places
-            .Select(t => new List<InlineKeyboardButton> { InlineKeyboardButton.WithCallbackData(t), })
+            .Select(t => new List<InlineKeyboardButton>
+            {
+                InlineKeyboardButton.WithCallbackData(t, $"/add {t}"),
+            })
             .ToList();
 
         return new InlineKeyboardMarkup(keyboards);
