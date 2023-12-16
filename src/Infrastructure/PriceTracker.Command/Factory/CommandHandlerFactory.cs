@@ -24,6 +24,8 @@ public class CommandHandlerFactory : ICommandHandlerFactory
                 return _commands.First(x => x is AddCommandHandler);
             case MenuCommands.Remove:
                 return _commands.First(x => x is RemoveCommandHandler);
+            case MenuCommands.List:
+                return _commands.First(x => x is ListCommandHandler);
             default:
                 return null;
         }

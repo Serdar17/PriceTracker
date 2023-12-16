@@ -1,13 +1,8 @@
 ﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
-using PriceTracker.Parser.Models;
 using PriceTracker.Parser;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using PriceTracker.Services.Parser.Models;
 
 namespace PriceTracker.Services.Parser
 {
@@ -16,7 +11,9 @@ namespace PriceTracker.Services.Parser
         public async Task<ParseResult> ParseAsync(string url)
         {
             var commandTime = TimeSpan.FromSeconds(150);
-            IWebDriver driver = new ChromeDriver(Environment.CurrentDirectory, new ChromeOptions(), commandTime);
+            var chromeDirectory = @$"{Environment.CurrentDirectory}/bin/Debug/net7.0" ;
+            IWebDriver driver = new ChromeDriver(chromeDirectory, new ChromeOptions(), commandTime);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
             driver.Navigate().GoToUrl(url);
             var find_title = driver.FindElement(By.XPath(".//h1[@class='_1a3VS D7c4V ZsaCc _2pkLA']"));
             var title = find_title.Text;

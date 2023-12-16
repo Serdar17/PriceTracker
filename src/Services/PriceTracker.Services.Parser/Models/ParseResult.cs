@@ -1,4 +1,4 @@
-namespace PriceTracker.Parser.Models;
+namespace PriceTracker.Services.Parser.Models;
 
 public class ParseResult
 {

@@ -1,4 +1,4 @@
-﻿using PriceTracker.Parser.Models;
+﻿using PriceTracker.Services.Parser.Models;
 
 namespace PriceTracker.Parser;
 

@@ -3,18 +3,18 @@ using Quartz;
 
 namespace PriceTracker.BackgroundJob;
 
-public class LoggingBackgroundJobSetup : IConfigureOptions<QuartzOptions>
+public class ParsingBackgroundJobSetup : IConfigureOptions<QuartzOptions>
 {
     public void Configure(QuartzOptions options)
     {
-        var jobKey = JobKey.Create(nameof(LoggingBackgroundJob));
+        var jobKey = JobKey.Create(nameof(ParsingBackgroundJob));
         options
-            .AddJob<LoggingBackgroundJob>(jobBuilder => jobBuilder.WithIdentity(jobKey))
+            .AddJob<ParsingBackgroundJob>(jobBuilder => jobBuilder.WithIdentity(jobKey))
             .AddTrigger(trigger => 
                 trigger
                     .ForJob(jobKey)
                     .WithSimpleSchedule(schedule => 
                         schedule
-                            .WithIntervalInSeconds(10).RepeatForever()));
+                            .WithIntervalInSeconds(120).RepeatForever()));
     }
 }

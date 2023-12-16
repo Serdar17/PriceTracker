@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PriceTracker.Commands.Commands;
 using Scrutor;
 
-namespace PriceTracker.Commands;
+namespace PriceTracker.Services.Parser;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddAppCommands(this IServiceCollection services)
+    public static IServiceCollection AddAppParsers(this IServiceCollection services)
     {
         services.Scan(scan => scan.FromCallingAssembly()
             .AddClasses(publicOnly: false)
@@ -16,5 +15,4 @@ public static class DependencyInjection
         
         return services;
     }
-    
 }

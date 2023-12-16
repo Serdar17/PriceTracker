@@ -22,6 +22,7 @@
       <ProjectReference Include="..\..\Infrastructure\PriceTracker.BackgroundJob\PriceTracker.BackgroundJob.csproj" />
       <ProjectReference Include="..\..\Infrastructure\PriceTracker.Command\PriceTracker.Command.csproj" />
       <ProjectReference Include="..\..\Infrastructure\PriceTracker.Infrastructure.Context\PriceTracker.Infrastructure.Context.csproj" />
+      <ProjectReference Include="..\..\Services\PriceTracker.Services.Parser\PriceTracker.Services.Parser.csproj" />
       <ProjectReference Include="..\..\Services\PriceTracker.Services.Product\PriceTracker.Services.Product.csproj" />
       <ProjectReference Include="..\..\Services\PriceTracker.Services.User\PriceTracker.Services.User.csproj" />
       <ProjectReference Include="..\..\Shared\PriceTracker.Common\PriceTracker.Common.csproj" />

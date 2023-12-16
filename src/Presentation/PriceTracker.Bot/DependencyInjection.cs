@@ -2,6 +2,7 @@
 using PriceTracker.Bot.Configuration;
 using PriceTracker.Commands;
 using PriceTracker.Infrastructure.Context;
+using PriceTracker.Services.Parser;
 using PriceTracker.Services.Product;
 using PriceTracker.Services.User;
 
@@ -18,6 +19,7 @@ public static class DependencyInjection
             .AddAppUserServices()
             .AddAppProductServices()
             .AddAppCommands()
+            .AddAppParsers()
             ;
         
         return services;

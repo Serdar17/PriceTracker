@@ -10,4 +10,9 @@
       <PackageReference Include="Quartz.Extensions.Hosting" Version="3.8.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Services\PriceTracker.Services.Parser\PriceTracker.Services.Parser.csproj" />
+      <ProjectReference Include="..\PriceTracker.Infrastructure.Context\PriceTracker.Infrastructure.Context.csproj" />
+    </ItemGroup>
+
 </Project>

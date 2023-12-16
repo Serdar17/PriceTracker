@@ -37,17 +37,17 @@ public class AddCommandHandler : ICommandHandler
         if (callbackQuery.Data is null)
             return;
 
-        var marketplaceName = callbackQuery.Data.Split()[^1];
+        var marketplaceName = callbackQuery.Data.Split().Skip(1);
         await botClient.SendTextMessageAsync(
             message.Chat.Id,
-            $"Пожалуйста, вставьте ссылку на товар {marketplaceName}", 
+            $"Пожалуйста, вставьте ссылку на товар {string.Join(" ",marketplaceName)}", 
             replyMarkup: new ForceReplyMarkup(), 
             cancellationToken: cancellationToken);
     }
 
     private InlineKeyboardMarkup GetInlineKeyboardMarkup()
     {
-        var places = MarketPlace.AvailableMarketPlaces;
+        var places = MarketPlace.GetAvailableMarketPlaces;
         var keyboards = places
             .Select(t => new List<InlineKeyboardButton>
             {

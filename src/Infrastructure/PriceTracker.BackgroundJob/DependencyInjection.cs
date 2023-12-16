@@ -17,7 +17,7 @@ public static class DependencyInjection
             opt.WaitForJobsToComplete = true;
         });
         
-        services.ConfigureOptions<LoggingBackgroundJobSetup>();
+        services.ConfigureOptions<ParsingBackgroundJobSetup>();
         return services;
     }
 }

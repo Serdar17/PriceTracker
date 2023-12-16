@@ -4,7 +4,7 @@ namespace PriceTracker.Domain.Entities;
 
 public class Product : BaseEntity<long>
 {
-    public string MarketPlaceName { get; set; } = string.Empty;
+    public string MarketPlaceName { get; set; }
     public string Title { get; set; }
     public string Link { get; set; }
 
@@ -13,8 +13,9 @@ public class Product : BaseEntity<long>
 
     public virtual ICollection<Price> Prices { get; set; } = new List<Price>();
     
-    public Product(string title, string link)
+    public Product(string marketPlaceName, string title, string link)
     {
+        MarketPlaceName = marketPlaceName;
         Title = title;
         Link = link;
     }
