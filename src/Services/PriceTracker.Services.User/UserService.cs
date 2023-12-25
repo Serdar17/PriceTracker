@@ -46,4 +46,16 @@ public class UserService : IUserService
         
         return user.Products;
     }
+
+    public async Task<IEnumerable<Domain.Entities.User>> GetUsersAsync(CancellationToken cancellationToken = default)
+    {
+        await using var context = await _factory.CreateDbContextAsync(cancellationToken);
+
+        var users = context.Users
+            .Include(x => x.Products)
+            .ThenInclude(x => x.Prices.Last())
+            .AsEnumerable();
+
+        return users;
+    }
 }

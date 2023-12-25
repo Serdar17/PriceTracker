@@ -26,8 +26,8 @@ public class StartCommandHandler : ICommandHandler
             return;
 
         var user = _mapper.Map<User>(message.From);
+        user.ChatId = message.Chat.Id;
         await _userService.CreateUserAsync(user, cancellationToken);
-
         var sentMessage = await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
             text: "PriceTracker - бот для отслеживания цен на популярных маркетплейсах. " +

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PriceTracker.Commands.Commands;
 using Scrutor;
 
 namespace PriceTracker.Commands;

@@ -36,6 +36,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Command", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceTracker.Services.Parser", "src\Services\PriceTracker.Services.Parser\PriceTracker.Services.Parser.csproj", "{8F78F755-66AA-44B4-8237-CA6AC77CA91A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_docker", "_docker", "{F4E8F4A5-6419-4DE5-A3F5-3E84DAC220A6}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.override.yml = docker-compose.override.yml
+		docker-compose.yml = docker-compose.yml
+		env.bot = env.bot
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

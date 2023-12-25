@@ -5,6 +5,8 @@ namespace PriceTracker.BackgroundJob;
 
 public class ParsingBackgroundJobSetup : IConfigureOptions<QuartzOptions>
 {
+    private static readonly TimeSpan TimeInMinutes = TimeSpan.FromMinutes(5);
+
     public void Configure(QuartzOptions options)
     {
         var jobKey = JobKey.Create(nameof(ParsingBackgroundJob));
@@ -15,6 +17,6 @@ public class ParsingBackgroundJobSetup : IConfigureOptions<QuartzOptions>
                     .ForJob(jobKey)
                     .WithSimpleSchedule(schedule => 
                         schedule
-                            .WithIntervalInSeconds(120).RepeatForever()));
+                            .WithIntervalInSeconds((int)TimeInMinutes.TotalSeconds).RepeatForever()));
     }
 }

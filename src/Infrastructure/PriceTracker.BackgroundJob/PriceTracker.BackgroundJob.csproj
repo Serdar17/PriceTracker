@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Services\PriceTracker.Services.Parser\PriceTracker.Services.Parser.csproj" />
+      <ProjectReference Include="..\..\Services\PriceTracker.Services.User\PriceTracker.Services.User.csproj" />
       <ProjectReference Include="..\PriceTracker.Infrastructure.Context\PriceTracker.Infrastructure.Context.csproj" />
     </ItemGroup>
 

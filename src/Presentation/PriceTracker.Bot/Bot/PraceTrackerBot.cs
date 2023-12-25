@@ -2,6 +2,7 @@
 using PriceTracker.Bot.Options;
 using PriceTracker.Commands.Factory;
 using PriceTracker.Domain.Entities;
+using PriceTracker.Domain.Telegram;
 using PriceTracker.Services.Parser.Factory;
 using PriceTracker.Services.User;
 using Telegram.Bot;
@@ -12,7 +13,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace PriceTracker.Bot.Bot;
 
-public class PriceTrackerBot
+public class PriceTrackerBot : ITelegramClient
 {
     private readonly TelegramBotClient _client;
     private readonly ICommandHandlerFactory _factory;
@@ -90,7 +91,8 @@ public class PriceTrackerBot
                     await _client.SendTextMessageAsync(
                         message.Chat.Id,
                         "Товар успешно добавлен, ожидайте изменение цены!\n" +
-                        $" Текущая цена товара *{parseResult.Title}* равна *{parseResult.Price}*",
+                        $"Название товара\n *{parseResult.Title}*\nЦена товара: *{parseResult.Price}*\n" +
+                        $"Цена товара по скидке/карте: *{parseResult?.CardPrice}*",
                         parseMode: ParseMode.Markdown,
                         cancellationToken: cancellationToken);
                     return;
@@ -108,6 +110,15 @@ public class PriceTrackerBot
             cancellationToken: cancellationToken);
     }
 
+    public async Task SendPriceChangingNotification(long chatId, string message, CancellationToken cancellationToken = default)
+    {
+       await _client.SendTextMessageAsync(
+            chatId,
+            message,
+            parseMode: ParseMode.Markdown,
+            cancellationToken: cancellationToken);
+    }
+    
     private async Task HandleCallbackQueryAsync(
         ITelegramBotClient botClient,
         CallbackQuery callbackQuery,
@@ -137,5 +148,6 @@ public class PriceTrackerBot
         };
 
         _logger.LogError("Price tracker Bot error {ApiErrorMessage}", errorMessage);
+        Thread.Sleep(2000);
     }
 }

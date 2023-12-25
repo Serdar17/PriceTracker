@@ -5,7 +5,7 @@ services:
     image: postgres:14.1-alpine
   
   price_tracker_bot:
-    image: ${DECKER_REGISTRY-}price-tracker-bot
+    image: ${DOCKER_REGISTRY-}price-tracker-bot
     build:
       context: .
       dockerfile: src/Presentation/PriceTracker.Bot/Dockerfile
