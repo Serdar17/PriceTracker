@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using PriceTracker.Domain.Entities;
 using PriceTracker.Domain.Telegram;
 using PriceTracker.Infrastructure.Context;
+using PriceTracker.Parser;
 using PriceTracker.Services.Parser.Factory;
 using PriceTracker.Services.User;
 using Quartz;
@@ -17,12 +18,13 @@ public class ParsingBackgroundJob : IJob
     private readonly IParserFactory _parserFactory;
     private readonly ITelegramClient _client;
     private readonly IUserService _userService;
+    private const double _eps = 1e-10;
 
     public ParsingBackgroundJob(ILogger<ParsingBackgroundJob> logger,
         IDbContextFactory<AppDbContext> factory,
         IServiceProvider provider, 
         ITelegramClient client, 
-        IUserService userService)
+        IUserService userService, IEnumerable<IParser> parsers)
     {
         _logger = logger;
         _factory = factory;
@@ -55,6 +57,19 @@ public class ParsingBackgroundJob : IJob
                                        "dscounted price = {DiscountedPrice}", price.CreateDate, price.CurrentPrice, price.DiscountedPrice);
                 
                 var result = await parser.ParseAsync(product.Link);
+
+                // if (result.Title is not null && (Math.Abs(price.CurrentPrice - (double)result?.Price!) > _eps
+                //                                  || Math.Abs(price.DiscountedPrice - (double)result?.CardPrice!) > _eps))
+                // {
+                //     _logger.LogInformation("The product name is {Title} has price: {Price} and discounted price: {DiscountedPrice}",
+                //         result.Title, result.Price, result.CardPrice);
+                //     product.Prices.Add(new Price(result.Price ?? 0.0, result.CardPrice ?? 0.0));
+                //     var message = $"\ud83d\udcb8Уведомление об изменении цены\n" +
+                //                   $"Название товара *{result.Title}*\n" +
+                //                   $"Цена без скидки: *{result.Price}*\n" +
+                //                   $"Цена со скидкой (по скидочной карте) *{result.CardPrice}*";
+                //     await _client.SendPriceChangingNotification(user.ChatId, message);
+                // }
                 
                 if (result.Title is not null)
                 {
@@ -64,7 +79,7 @@ public class ParsingBackgroundJob : IJob
                     var message = $"Название товара *{result.Title}*\n" +
                                   $"Цена без скидки: *{result.Price}*\n" +
                                   $"Цена со скидкой (по скидочной карте) *{result.CardPrice}*";
-
+                
                     await _client.SendPriceChangingNotification(user.ChatId, message);
                 }
 

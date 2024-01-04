@@ -63,10 +63,10 @@ namespace PriceTracker.Services.Parser
 
 
                 var parseResult = new ParseResult(title, price, cardPrice: null);
-                return new ParseResult(title, price, cardPrice: null);
+                return new ParseResult(title, price, cardPrice: 0.0);
             }
             else
-                return new ParseResult(title: null, price: null, cardPrice: null);
+                return new ParseResult(title: null, price: 0.0, cardPrice: 0.0);
         }
 
         private static Dictionary<string, string?> GetProductParams(string url)

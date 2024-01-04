@@ -46,7 +46,7 @@ public class ListCommandHandler : ICommandHandler
         var keyboards = products
             .Select((p, i) => new List<InlineKeyboardButton>
             {
-                InlineKeyboardButton.WithCallbackData(p.Link, $"/remove {p.Id}")
+                InlineKeyboardButton.WithUrl(p.Title, p.Link)
             })
             .ToList();
 
