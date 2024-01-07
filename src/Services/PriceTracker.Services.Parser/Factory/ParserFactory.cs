@@ -21,8 +21,10 @@ public class ParserFactory : IParserFactory
                 return _parsers.First(x => x is YandexParser);
             case MarketPlace.KazanExpress:
                 return _parsers.First(x => x is KazanExpressParser);
-            case MarketPlace.Ozon:
-                return _parsers.First(x => x is OzonParser);
+            // case MarketPlace.Ozon:
+            //     return _parsers.First(x => x is OzonParser);
+            case MarketPlace.MVideo:
+                return _parsers.First(x => x is MVideoParser);
             case MarketPlace.Test:
                 return _parsers.First(x => x is TestParser);
             default:

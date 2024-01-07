@@ -40,7 +40,7 @@ public class AddCommandHandler : ICommandHandler
         var marketplaceName = callbackQuery.Data.Split().Skip(1);
         await botClient.SendTextMessageAsync(
             message.Chat.Id,
-            $"Пожалуйста, вставьте ссылку на товар {string.Join(" ",marketplaceName)}", 
+            $"Пожалуйста, вставьте ссылку на товар {string.Join(" ", marketplaceName)}", 
             replyMarkup: new ForceReplyMarkup(), 
             cancellationToken: cancellationToken);
     }

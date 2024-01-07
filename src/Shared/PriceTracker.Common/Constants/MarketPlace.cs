@@ -4,7 +4,8 @@ public static class MarketPlace
 {
     public const string YandexMarket = "Yandex Market";
     public const string KazanExpress = "Kazan Express";
-    public const string Ozon = "Ozon";
+    // public const string Ozon = "Ozon";
+    public const string MVideo = "MVideo";
     public const string Test = "test";
 
     public static List<string> GetAvailableMarketPlaces =>
@@ -12,7 +13,7 @@ public static class MarketPlace
         {
             YandexMarket,
             KazanExpress,
-            Ozon,
+            MVideo,
             Test,
         };
     
