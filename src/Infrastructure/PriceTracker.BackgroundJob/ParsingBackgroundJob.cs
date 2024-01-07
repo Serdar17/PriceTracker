@@ -58,30 +58,30 @@ public class ParsingBackgroundJob : IJob
                 
                 var result = await parser.ParseAsync(product.Link);
 
-                // if (result.Title is not null && (Math.Abs(price.CurrentPrice - (double)result?.Price!) > _eps
-                //                                  || Math.Abs(price.DiscountedPrice - (double)result?.CardPrice!) > _eps))
-                // {
-                //     _logger.LogInformation("The product name is {Title} has price: {Price} and discounted price: {DiscountedPrice}",
-                //         result.Title, result.Price, result.CardPrice);
-                //     product.Prices.Add(new Price(result.Price ?? 0.0, result.CardPrice ?? 0.0));
-                //     var message = $"\ud83d\udcb8Уведомление об изменении цены\n" +
-                //                   $"Название товара *{result.Title}*\n" +
-                //                   $"Цена без скидки: *{result.Price}*\n" +
-                //                   $"Цена со скидкой (по скидочной карте) *{result.CardPrice}*";
-                //     await _client.SendPriceChangingNotification(user.ChatId, message);
-                // }
-                
-                if (result.Title is not null)
+                if (result.Title is not null && (Math.Abs(price.CurrentPrice - (double)result?.Price!) > _eps
+                                                 || Math.Abs(price.DiscountedPrice - (double)result?.CardPrice!) > _eps))
                 {
                     _logger.LogInformation("The product name is {Title} has price: {Price} and discounted price: {DiscountedPrice}",
                         result.Title, result.Price, result.CardPrice);
                     product.Prices.Add(new Price(result.Price ?? 0.0, result.CardPrice ?? 0.0));
-                    var message = $"Название товара *{result.Title}*\n" +
+                    var message = $"\ud83d\udcb8Уведомление об изменении цены\n" +
+                                  $"Название товара *{result.Title}*\n" +
                                   $"Цена без скидки: *{result.Price}*\n" +
                                   $"Цена со скидкой (по скидочной карте) *{result.CardPrice}*";
-                
                     await _client.SendPriceChangingNotification(user.ChatId, message);
                 }
+                
+                // if (result.Title is not null)
+                // {
+                //     _logger.LogInformation("The product name is {Title} has price: {Price} and discounted price: {DiscountedPrice}",
+                //         result.Title, result.Price, result.CardPrice);
+                //     product.Prices.Add(new Price(result.Price ?? 0.0, result.CardPrice ?? 0.0));
+                //     var message = $"Название товара *{result.Title}*\n" +
+                //                   $"Цена без скидки: *{result.Price}*\n" +
+                //                   $"Цена со скидкой (по скидочной карте) *{result.CardPrice}*";
+                //
+                //     await _client.SendPriceChangingNotification(user.ChatId, message);
+                // }
 
                 dbContext.Products.Update(product);
             }
