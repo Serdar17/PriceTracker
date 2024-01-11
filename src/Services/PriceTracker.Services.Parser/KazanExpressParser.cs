@@ -47,7 +47,7 @@ namespace PriceTracker.Services.Parser
                 {
                     var productId = int.Parse(productParams["productId"]);
 
-                    //Цена товара, если выбраны определенные характеристики(цвет, размер)
+                    //Цена товара, если выбраны дополнительные характеристики(цвет, размер)
                     price = skuList.Where(p => (int)(long)p["id"] == productId)
                         .Select(p => (double)p["purchasePrice"])
                         .First();
@@ -68,6 +68,9 @@ namespace PriceTracker.Services.Parser
         {
             var productParams = new Dictionary<string, string?>();
             var productInfo = new Regex(@"(\d*)(\?\S*)?$").Match(url).Value;
+            //Проверка для ссылок из мобильного приложения
+            if (productInfo.Contains('&'))
+                productInfo = productInfo.Split('&')[0];
             string productIndex;
             string? productId;
 
