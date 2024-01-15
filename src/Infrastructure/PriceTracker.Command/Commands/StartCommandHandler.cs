@@ -30,8 +30,9 @@ public class StartCommandHandler : ICommandHandler
         await _userService.CreateUserAsync(user, cancellationToken);
         var sentMessage = await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "PriceTracker - бот для отслеживания цен на популярных маркетплейсах. " +
-                  "Для добавления своего товара, нажмите на /add, выберите доступный маркетплей и вставьте ссылку",
+            text: "\ud83d\uded2 PriceTracker - бот для удобного отслеживания цен на популярных маркетплейсах. " +
+                  "Выберите в меню /add, выберите интересующий маркетплейс и вставьте ссылку на товар - и ваша ценовая " +
+                  "магия начнется! \ud83d\ude80",
             cancellationToken: cancellationToken);
     }
 

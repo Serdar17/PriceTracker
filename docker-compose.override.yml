@@ -15,7 +15,7 @@ services:
   
   price_tracker_bot:
     ports:
-      - "10000:80"
+      - "1000:80"
     networks:
       - shared_price_tracker
     env_file:

@@ -1,6 +1,7 @@
 ﻿using PriceTracker.Common.Constants;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace PriceTracker.Commands.Commands;
@@ -40,8 +41,9 @@ public class AddCommandHandler : ICommandHandler
         var marketplaceName = callbackQuery.Data.Split().Skip(1);
         await botClient.SendTextMessageAsync(
             message.Chat.Id,
-            $"Пожалуйста, вставьте ссылку на товар {string.Join(" ", marketplaceName)}", 
-            replyMarkup: new ForceReplyMarkup(), 
+            $"\ud83d\udd17 Пожалуйста, вставьте ссылку на товар *{string.Join(" ", marketplaceName)}*", 
+            replyMarkup: new ForceReplyMarkup(),
+            parseMode: ParseMode.Markdown,
             cancellationToken: cancellationToken);
     }
 

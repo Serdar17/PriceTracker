@@ -74,7 +74,7 @@ public class PriceTrackerBot : ITelegramClient
     private async Task HandleReplyToMessageAsync(Message message, CancellationToken cancellationToken)
     {
         var replyToMessage = message.ReplyToMessage!.Text;
-        var marketPlaceName = string.Join(" ", replyToMessage!.Split().Skip(5));
+        var marketPlaceName = string.Join(" ", replyToMessage!.Split().Last());
         var parser = _parserFactory.CreateParser(marketPlaceName);
         if (parser is not null && message.Text is not null)
         {
@@ -90,9 +90,13 @@ public class PriceTrackerBot : ITelegramClient
             
                     await _client.SendTextMessageAsync(
                         message.Chat.Id,
-                        "Товар успешно добавлен, ожидайте изменение цены!\n" +
-                        $"Название товара\n *{parseResult.Title}*\nЦена товара: *{parseResult.Price}*\n" +
-                        $"Цена товара по скидке/карте: *{parseResult?.CardPrice}*",
+                        "\u2705 Товар успешно добавлен!\n" +
+                        $"\ud83d\udc49 Название: \n*{parseResult.Title}*\n" +
+                        $"\ud83d\udcb0 Цена: *{parseResult.Price}* \u20bd \n" +
+                        $"\ud83d\udcb3 Цена по скидке/карте: *{parseResult?.CardPrice}* \u20bd \n" +
+                        $"\n" +
+                        $"\ud83d\udd04 Ожидайте изменение цены!\n" +
+                        $"\u2600 Надеемся, ваш день будет таким же замечательным, как и выбранный вами товар! \ud83c\udf08",
                         parseMode: ParseMode.Markdown,
                         cancellationToken: cancellationToken);
                     return;
@@ -106,7 +110,7 @@ public class PriceTrackerBot : ITelegramClient
         
         await _client.SendTextMessageAsync(
             message.Chat.Id,
-            "Товар не был добавлен, проверьте наличие и доступность товара на маркетплейсе",
+            "\u274c Товар не был добавлен. Пожалуйста, проверьте наличие и доступность товара на выбранном маркетплейсе.",
             cancellationToken: cancellationToken);
     }
 

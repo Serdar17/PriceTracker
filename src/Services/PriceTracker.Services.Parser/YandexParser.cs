@@ -14,17 +14,17 @@ namespace PriceTracker.Services.Parser
             try
             {
                 driver.Navigate().GoToUrl(url);
-                var findTitle =  driver.FindElement(By.XPath(".//h1[@class='_1a3VS D7c4V ZsaCc _2pkLA']"));
+                var findTitle =  driver.FindElement(By.XPath(".//h1[@data-additional-zone='title']"));
                 var title = findTitle.Text;
                 double price = 0;
                 double priceCard = 0;
                 try
                 {
                     var pattern = @":\d+";
-                    var findPrice = driver.FindElement(By.XPath(".//span[@class='_8-sD9']"));
+                    var findPrice = driver.FindElement(By.XPath(".//h3[@data-auto='snippet-price-current']"));
                     Console.WriteLine(findPrice.Text);
                     price = double.Parse(Regex.Match(Regex.Replace(findPrice.Text, "\\s", ""), pattern).Value.Replace(":", ""));
-                    var findCardPrice = driver.FindElement(By.XPath(".//div[@tabindex=0]/h3[@class='_1stjo']"));
+                    var findCardPrice = driver.FindElement(By.XPath(".//h3[@data-auto='snippet-price-current']"));
                     Console.WriteLine(findCardPrice.Text);
                     priceCard = double.Parse((Regex.Replace(findCardPrice.Text, @"[^\d]", "")));
                 }
@@ -42,8 +42,7 @@ namespace PriceTracker.Services.Parser
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                return new ParseResult(null, null, null);
             }
             finally
             {

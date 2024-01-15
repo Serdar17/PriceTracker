@@ -17,7 +17,7 @@ public class DriverConfig
         var chromeDriverService = ChromeDriverService.CreateDefaultService();
         chromeDriverService.HideCommandPromptWindow = true;
         var driver = new ChromeDriver(chromeDriverService, options);
-        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
+        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(4);
         return driver;
     }
 }

@@ -30,7 +30,7 @@ public class ListCommandHandler : ICommandHandler
         
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Список товаров",
+            text: "\ud83d\udccb Ваш список товаров:",
             replyMarkup: keyboards,
             cancellationToken: cancellationToken);
     }

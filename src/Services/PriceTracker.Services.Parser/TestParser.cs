@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Globalization;
+using OpenQA.Selenium;
 using PriceTracker.Parser;
 using PriceTracker.Services.Parser.Models;
 
@@ -16,9 +17,9 @@ public class TestParser : IParser
     public async Task<ParseResult> ParseAsync(string url)
     {
         _driver.Navigate().GoToUrl(url);
-        var title = _driver.FindElement(By.XPath(".//div[@class='_title_1sfv9_20']/h2[1]")).Text;
-        var price = _driver.FindElement(By.XPath(".//div[@class='_title_1sfv9_20']/h2[2]")).Text;
+        var title = _driver.FindElements(By.XPath(".//div[@class='esh-catalog-name ml-3']/span")).First().Text;
+        var price = _driver.FindElements(By.XPath(".//div[@class='esh-catalog-price mr-3']/span")).First().Text;
         Console.WriteLine(title);
-        return new ParseResult(title, double.Parse(price), double.Parse(price));
+        return new ParseResult(title, double.Parse(price, CultureInfo.InvariantCulture), double.Parse(price, CultureInfo.InvariantCulture));
     }
 }

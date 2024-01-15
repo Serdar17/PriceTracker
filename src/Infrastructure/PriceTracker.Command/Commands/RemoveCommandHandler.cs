@@ -34,7 +34,7 @@ public class RemoveCommandHandler : ICommandHandler
         
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: "Нажмите на товар для удаление из списка отслеживаемых",
+            text: "\ud83d\uddd1 Чтобы удалить товар из списка отслеживаемых, просто нажмите на него!",
             replyMarkup: keyboards,
             cancellationToken: cancellationToken);
     }
@@ -65,7 +65,7 @@ public class RemoveCommandHandler : ICommandHandler
         
         await botClient.SendTextMessageAsync(
             chatId: message.Chat.Id,
-            text: $"Товар успешно удален",
+            text: "\u2705 Товар успешно удален!",
             cancellationToken: cancellationToken);
     }
 

@@ -64,10 +64,13 @@ public class ParsingBackgroundJob : IJob
                     _logger.LogInformation("The product name is {Title} has price: {Price} and discounted price: {DiscountedPrice}",
                         result.Title, result.Price, result.CardPrice);
                     product.Prices.Add(new Price(result.Price ?? 0.0, result.CardPrice ?? 0.0));
-                    var message = $"\ud83d\udcb8Уведомление об изменении цены\n" +
-                                  $"Название товара *{result.Title}*\n" +
-                                  $"Цена без скидки: *{result.Price}*\n" +
-                                  $"Цена со скидкой (по скидочной карте) *{result.CardPrice}*";
+                    var message = $"\ud83d\udd14 Уведомление об изменении цены!\n" +
+                                  $"\ud83d\udc49 Название товара: *{result.Title}*\n" +
+                                  $"\n" +
+                                  $"\ud83d\udcb0 Цена без скидки: *{result.Price}* \u20bd \n" +
+                                  $"\ud83d\udcb3 Цена по скидке/карте:  *{result.CardPrice}* \u20bd \n" +
+                                  $"\n" +
+                                  $"\ud83d\udd17 [Ссылка на товар]({product.Link})";
                     await _client.SendPriceChangingNotification(user.ChatId, message);
                 }
                 

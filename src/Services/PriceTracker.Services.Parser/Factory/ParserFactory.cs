@@ -27,7 +27,7 @@ public class ParserFactory : IParserFactory
                 return _parsers.First(x => x is MVideoParser);
             case MarketPlace.MegaMarket:
                 return _parsers.First(x => x is MegaMarketParser);
-            case MarketPlace.Test:
+            case MarketPlace.Localhost:
                 return _parsers.First(x => x is TestParser);
             default:
                 return null;

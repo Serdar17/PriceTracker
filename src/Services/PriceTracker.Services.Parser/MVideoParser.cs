@@ -12,26 +12,27 @@ public class MVideoParser : IParser
     public async Task<ParseResult> ParseAsync(string url)
     {
         var driver = DriverConfig.GetConfiguredWebDriver();
-        driver.Navigate().GoToUrl(url);
-        var title = driver.FindElement(By.XPath(".//h1[@itemprop='name']")).Text;
         double price = 0;
         double cardPrice = 0;
+        var title = string.Empty;
         try
         {
-            var findPrice = driver.FindElement(By.XPath(".//span[@class='price__sale-value ng-star-inserted']")).Text;
+            driver.Navigate().GoToUrl(url);
+            title = driver.FindElement(By.XPath(".//h1[@itemprop='name']")).Text;
+            var findPrice = driver.FindElement(By.XPath(".//div[@class='price price--pdp-emphasized-personal-price ng-star-inserted']/span[@class='price__sale-value ng-star-inserted']")).Text;
             findPrice = findPrice.Replace(" ", "");
             price = double.Parse(Regex.Match(findPrice, Pattern).Value);
-            var findCardPrice = driver.FindElement(By.XPath(".//span[@class='price__main-value']")).Text;
+            var findCardPrice = driver.FindElement(By.XPath(".//div[@class='price price--pdp-emphasized-personal-price ng-star-inserted']/span[@class='price__main-value']")).Text;
             findCardPrice = findCardPrice.Replace(" ", "");
             cardPrice = double.Parse(Regex.Match(findCardPrice, Pattern).Value);
         }
         catch (Exception e)
         {
             var findCardPrice =
-                driver.FindElement(By.XPath(".//span[@class='price__main-value']")).Text;
+                driver.FindElement(By.XPath(".//div[@class='price price--pdp-emphasized-personal-price ng-star-inserted']/span[@class='price__main-value']")).Text;
             findCardPrice = findCardPrice.Replace(" ", "");
             cardPrice = double.Parse(Regex.Match(findCardPrice, Pattern).Value);
-            return new ParseResult(title, cardPrice, null);
+            return new ParseResult(title, cardPrice, cardPrice);
         }
         finally
         {
