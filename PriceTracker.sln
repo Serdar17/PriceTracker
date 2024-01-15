@@ -43,6 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_docker", "_docker", "{F4E8
 		env.bot = env.bot
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.UnitTests", "tests\Services.UnitTests\Services.UnitTests.csproj", "{C18BFD33-2E9D-4391-9D8A-599F3A9F4D8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,7 @@ Global
 		{23D23303-B3DF-48E7-8B69-AEFCA6A7E5D4} = {9C8777C0-2260-407D-903D-E281351AA8EA}
 		{568A31D3-F495-42C1-A7C0-8D0652546ACC} = {0190D45D-5D4F-4199-9A38-3B2F4E419A4F}
 		{8F78F755-66AA-44B4-8237-CA6AC77CA91A} = {9C8777C0-2260-407D-903D-E281351AA8EA}
+		{C18BFD33-2E9D-4391-9D8A-599F3A9F4D8E} = {B1129489-A172-4E96-9D10-E00A64EB38B1}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{52523E20-E623-4849-91E4-FA46B09169D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -111,5 +114,9 @@ Global
 		{8F78F755-66AA-44B4-8237-CA6AC77CA91A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F78F755-66AA-44B4-8237-CA6AC77CA91A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F78F755-66AA-44B4-8237-CA6AC77CA91A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C18BFD33-2E9D-4391-9D8A-599F3A9F4D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C18BFD33-2E9D-4391-9D8A-599F3A9F4D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C18BFD33-2E9D-4391-9D8A-599F3A9F4D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C18BFD33-2E9D-4391-9D8A-599F3A9F4D8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

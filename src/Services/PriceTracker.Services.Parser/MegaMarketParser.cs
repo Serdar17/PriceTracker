@@ -19,17 +19,17 @@ public class MegaMarketParser : IParser
         {
             driver.Navigate().GoToUrl(url);
             title = driver.FindElement(By.XPath(".//h1[@itemprop='name']")).Text;
-            var findPrice = driver.FindElements(By.XPath(".//del[@class='crossed-old-price-with-discount__crossed-old-price']")).First().Text;
+            var findPrice = driver.FindElement(By.XPath(".//div[@class='sales-block-offer-price sales-block-offer-price_active']//del[@class='crossed-old-price-with-discount__crossed-old-price']")).Text;
             findPrice = findPrice.Replace(" ", "");
             price = double.Parse(Regex.Match(findPrice, Pattern).Value);
-            var findCardPrice = driver.FindElements(By.XPath(".//span[@class='sales-block-offer-price__price-final']")).First().Text;
+            var findCardPrice = driver.FindElement(By.XPath(".//div[@class='sales-block-offer-price sales-block-offer-price_active']/div/span[@class='sales-block-offer-price__price-final']")).Text;
             findCardPrice = findCardPrice.Replace(" ", "");
             cardPrice = double.Parse(Regex.Match(findCardPrice, Pattern).Value);
         }
         catch (Exception e)
         {
             var findCardPrice =
-                driver.FindElements(By.XPath(".//span[@class='sales-block-offer-price__price-final")).First().Text;
+                driver.FindElements(By.XPath(".//div[@class='sales-block-offer-price sales-block-offer-price_active']/div/span[@class='sales-block-offer-price__price-final']")).First().Text;
             findCardPrice = findCardPrice.Replace(" ", "");
             cardPrice = double.Parse(Regex.Match(findCardPrice, Pattern).Value);
             return new ParseResult(title, cardPrice, cardPrice);
@@ -37,6 +37,11 @@ public class MegaMarketParser : IParser
         finally
         {
             driver.Close();
+        }
+        
+        if (string.IsNullOrEmpty(title))
+        {
+            return new ParseResult(null, null, null);
         }
 
         return new ParseResult(title, price, cardPrice);

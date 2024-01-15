@@ -1,0 +1,8 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f6c2dea3_002D13b1_002D482b_002Db459_002D98c62d824b3a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Handler_Should_NonAction_WhenProductWasNotFound" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::C18BFD33-2E9D-4391-9D8A-599F3A9F4D8E::net7.0::Services.UnitTests.Products.ProductServiceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C18BFD33-2E9D-4391-9D8A-599F3A9F4D8E::net7.0::Services.UnitTests.Users.UserServiceTests.CreateUser_ShouldCreateUser_IfUserDontExists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C18BFD33-2E9D-4391-9D8A-599F3A9F4D8E::net7.0::Services.UnitTests.Users.UserServiceTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

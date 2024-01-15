@@ -7,6 +7,7 @@ public static class MarketPlace
     // public const string Ozon = "Ozon";
     public const string MVideo = "MVideo";
     public const string MegaMarket = "MegaMarket";
+    public const string Citilink = "Citilink";
     public const string Localhost = "Localhost";
 
     public static List<string> GetAvailableMarketPlaces =>
@@ -16,6 +17,7 @@ public static class MarketPlace
             KazanExpress,
             MVideo,
             MegaMarket,
+            Citilink,
             Localhost,
         };
 }

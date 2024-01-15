@@ -1,17 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PriceTracker.Domain.Entities;
+using PriceTracker.Domain.Repositories;
 
 namespace PriceTracker.Infrastructure.Context;
 
 public class AppDbContext : DbContext
 {
-    public DbSet<User> Users { get; set; }
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Price> Prices { get; set; }
+    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Product> Products { get; set; }
+    public virtual DbSet<Price> Prices { get; set; }
     
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+    }
+
+    public AppDbContext()
+    {
     }
     
     protected override void OnModelCreating(ModelBuilder builder)

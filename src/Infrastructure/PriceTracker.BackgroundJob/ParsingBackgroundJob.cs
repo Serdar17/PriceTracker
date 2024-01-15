@@ -65,12 +65,21 @@ public class ParsingBackgroundJob : IJob
                         result.Title, result.Price, result.CardPrice);
                     product.Prices.Add(new Price(result.Price ?? 0.0, result.CardPrice ?? 0.0));
                     var message = $"\ud83d\udd14 Уведомление об изменении цены!\n" +
-                                  $"\ud83d\udc49 Название товара: *{result.Title}*\n" +
+                                  $"\ud83d\udcb0 Прошлая цена без скидки: {price.CurrentPrice} \u20bd \n" +
+                                  $"\ud83d\udcb3 Прошлая цена по скидке/карте: {price.DiscountedPrice} \u20bd \n" +
                                   $"\n" +
-                                  $"\ud83d\udcb0 Цена без скидки: *{result.Price}* \u20bd \n" +
-                                  $"\ud83d\udcb3 Цена по скидке/карте:  *{result.CardPrice}* \u20bd \n" +
+                                  $"\ud83d\udcbc Новая цена без скидки: *{result.Price}* \u20bd \n" +
+                                  $"\ud83d\udcb3 Новая цена по скидке/карте: *{result.CardPrice}* \u20bd \n" +
                                   $"\n" +
                                   $"\ud83d\udd17 [Ссылка на товар]({product.Link})";
+                    await _client.SendPriceChangingNotification(user.ChatId, message);
+                }
+                
+                if (result.Title is null)
+                {
+                    var message = "\u274c Проверьте наличие товара на маркетплейсе. Возможно его удалили или он " +
+                                   "просто закончился.\n" +
+                                   $"\ud83d\udd17 [Ссылка на товар]({product.Link})";
                     await _client.SendPriceChangingNotification(user.ChatId, message);
                 }
                 
