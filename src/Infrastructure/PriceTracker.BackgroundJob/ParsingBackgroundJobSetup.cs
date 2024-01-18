@@ -5,7 +5,7 @@ namespace PriceTracker.BackgroundJob;
 
 public class ParsingBackgroundJobSetup : IConfigureOptions<QuartzOptions>
 {
-    private static readonly TimeSpan TimeInMinutes = TimeSpan.FromMinutes(5);
+    private static readonly TimeSpan TimeInMinutes = TimeSpan.FromHours(1);
 
     public void Configure(QuartzOptions options)
     {

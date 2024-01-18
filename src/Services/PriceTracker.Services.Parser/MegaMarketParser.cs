@@ -18,6 +18,7 @@ public class MegaMarketParser : IParser
         try
         {
             driver.Navigate().GoToUrl(url);
+            driver.Navigate().Refresh(); // при первой загрузке страницы показывает не ту цену, после перезагрузки цена стает актуальной
             title = driver.FindElement(By.XPath(".//h1[@itemprop='name']")).Text;
             var findPrice = driver.FindElement(By.XPath(".//div[@class='sales-block-offer-price sales-block-offer-price_active']//del[@class='crossed-old-price-with-discount__crossed-old-price']")).Text;
             findPrice = findPrice.Replace(" ", "");
