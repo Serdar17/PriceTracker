@@ -2,9 +2,10 @@
 
 public static class MarketPlace
 {
+    public const string UzumMarket = "UzumMarket";
     public const string YandexMarket = "Yandex Market";
     public const string KazanExpress = "KazanExpress";
-    // public const string Ozon = "Ozon";
+    public const string Ozon = "Ozon";
     public const string MVideo = "MVideo";
     public const string MegaMarket = "MegaMarket";
     public const string Citilink = "Citilink";
@@ -13,6 +14,7 @@ public static class MarketPlace
     public static List<string> GetAvailableMarketPlaces =>
         new()
         {
+            UzumMarket,
             // YandexMarket,
             KazanExpress,
             MVideo,

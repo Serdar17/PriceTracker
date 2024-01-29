@@ -17,6 +17,8 @@ public class ParserFactory : IParserFactory
     {
         switch (parser)
         {
+            case MarketPlace.UzumMarket:
+                return _parsers.First(x => x is UzumParser);
             case MarketPlace.YandexMarket:
                 return _parsers.First(x => x is YandexParser);
             case MarketPlace.KazanExpress:

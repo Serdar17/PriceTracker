@@ -5,6 +5,7 @@ using PriceTracker.Domain.Entities;
 using PriceTracker.Domain.Telegram;
 using PriceTracker.Infrastructure.Context;
 using PriceTracker.Services.Parser.Factory;
+using PriceTracker.Services.Parser.Models;
 using Quartz;
 
 namespace PriceTracker.BackgroundJob;
@@ -54,20 +55,14 @@ public class ParsingBackgroundJob : IJob
                 
                 var result = await parser.ParseAsync(product.Link);
     
-                if (result.Title is not null && (Math.Abs(price.CurrentPrice - (double)result?.Price!) > Eps
+                if (result is not null && (Math.Abs(price.CurrentPrice - (double)result?.Price!) > Eps
                                                  || Math.Abs(price.DiscountedPrice - (double)result?.CardPrice!) > Eps))
                 {
                     _logger.LogInformation("The product name is {Title} has price: {Price} and discounted price: {DiscountedPrice}",
                         result.Title, result.Price, result.CardPrice);
+                    
                     product.Prices.Add(new Price(result.Price ?? 0.0, result.CardPrice ?? 0.0));
-                    var message = $"\ud83d\udd14 Уведомление об изменении цены!\n" +
-                                  $"\ud83d\udcb0 Прошлая цена без скидки: {price.CurrentPrice} \u20bd \n" +
-                                  $"\ud83d\udcb3 Прошлая цена по скидке/карте: {price.DiscountedPrice} \u20bd \n" +
-                                  $"\n" +
-                                  $"\ud83d\udcbc Новая цена без скидки: *{result.Price}* \u20bd \n" +
-                                  $"\ud83d\udcb3 Новая цена по скидке/карте: *{result.CardPrice}* \u20bd \n" +
-                                  $"\n" +
-                                  $"\ud83d\udd17 [Ссылка на товар]({product.Link})";
+                    var message = GetNotificationMessage(product, price, result);
                     await _client.SendPriceChangingNotification(user.ChatId, message);
                 }
                 
@@ -85,6 +80,20 @@ public class ParsingBackgroundJob : IJob
         await dbContext.SaveChangesAsync();
         
         _logger.LogInformation("background working ended at {EndTime}", DateTime.Now);
+    }
+
+    private string GetNotificationMessage(Product product, Price price, ParseResult result)
+    {
+        var currency = result.Currency ?? "\u20bd";
+        var message = $"\ud83d\udd14 Уведомление об изменении цены!\n" +
+                      $"\ud83d\udcb0 Прошлая цена без скидки: {price.CurrentPrice} {currency} \n" +
+                      $"\ud83d\udcb3 Прошлая цена по скидке/карте: {price.DiscountedPrice} {currency} \n" +
+                      $"\n" +
+                      $"\ud83d\udcbc Новая цена без скидки: *{result.Price}* {currency} \n" +
+                      $"\ud83d\udcb3 Новая цена по скидке/карте: *{result.CardPrice}* {currency} \n" +
+                      $"\n" +
+                      $"\ud83d\udd17 [Ссылка на товар]({product.Link})";
+        return message;
     }
 
     // private async Task TryParseAsync(Product product, User user)

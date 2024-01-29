@@ -4,5 +4,5 @@ namespace PriceTracker.Parser;
 
 public interface IParser
 {
-    Task<ParseResult> ParseAsync(string url);
+    Task<ParseResult?> ParseAsync(string url);
 }

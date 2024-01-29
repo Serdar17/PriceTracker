@@ -81,19 +81,19 @@ public class PriceTrackerBot : ITelegramClient
             try
             {
                 var parseResult = await parser.ParseAsync(message.Text);
-                if (parseResult.Title is not null)
+                if (parseResult is not null)
                 {
-                    var product = new Product(marketPlaceName, parseResult.Title, message.Text);
+                    var product = new Product(marketPlaceName, parseResult.Title, message.Text, parseResult.Currency);
                     var price = new Price(parseResult.Price ?? 0.0, parseResult.CardPrice ?? 0.0);
                     product.Prices.Add(price);
                     await _userService.AddProductToUserAsync(message.From.Id, product, cancellationToken);
-            
+                    var currency = parseResult.Currency ?? "\u20bd";
                     await _client.SendTextMessageAsync(
                         message.Chat.Id,
                         "\u2705 Товар успешно добавлен!\n" +
                         $"\ud83d\udc49 Название: \n*{parseResult.Title}*\n" +
-                        $"\ud83d\udcb0 Цена: *{parseResult.Price}* \u20bd \n" +
-                        $"\ud83d\udcb3 Цена по скидке/карте: *{parseResult?.CardPrice}* \u20bd \n" +
+                        $"\ud83d\udcb0 Цена: *{parseResult.Price}* {currency} \n" +
+                        $"\ud83d\udcb3 Цена по скидке/карте: *{parseResult?.CardPrice}* {currency} \n" +
                         $"\n" +
                         $"\ud83d\udd04 Ожидайте изменение цены!\n" +
                         $"\u2600 Надеемся, ваш день будет таким же замечательным, как и выбранный вами товар! \ud83c\udf08",

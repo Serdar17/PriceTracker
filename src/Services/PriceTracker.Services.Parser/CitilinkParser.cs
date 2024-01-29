@@ -7,7 +7,7 @@ namespace PriceTracker.Services.Parser
 {
     public class CitilinkParser : IParser
     {
-        public async Task<ParseResult> ParseAsync(string url)
+        public async Task<ParseResult?> ParseAsync(string url)
         {
             IWebDriver driver = DriverConfig.GetConfiguredWebDriver();
             var title = string.Empty;
@@ -32,6 +32,7 @@ namespace PriceTracker.Services.Parser
             catch (Exception ex)
             {
                 price = -1;
+                return null;
             }
             finally
             {

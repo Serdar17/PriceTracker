@@ -12,6 +12,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(x => x.Title).HasMaxLength(250);
 
+        builder.Property(x => x.Currency).HasMaxLength(25);
+
         builder.HasMany(x => x.Prices)
             .WithOne(x => x.Product)
             .HasForeignKey(x => x.ProductId)

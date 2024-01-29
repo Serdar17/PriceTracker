@@ -9,7 +9,7 @@ public class MVideoParser : IParser
 {
     private const string Pattern = @"\d+,?\d+";
     
-    public async Task<ParseResult> ParseAsync(string url)
+    public async Task<ParseResult?> ParseAsync(string url)
     {
         var driver = DriverConfig.GetConfiguredWebDriver();
         double price = 0;

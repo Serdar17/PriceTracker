@@ -9,7 +9,7 @@ public class MegaMarketParser : IParser
 {
     private const string Pattern = @"\d+,?\d+";
     
-    public async Task<ParseResult> ParseAsync(string url)
+    public async Task<ParseResult?> ParseAsync(string url)
     {
         var driver = DriverConfig.GetConfiguredWebDriver();
         double price = 0;
@@ -37,12 +37,12 @@ public class MegaMarketParser : IParser
         }
         finally
         {
-            driver.Close();
+            // driver.Close();
         }
         
         if (string.IsNullOrEmpty(title))
         {
-            return new ParseResult(null, null, null);
+            return null;
         }
 
         return new ParseResult(title, price, cardPrice);

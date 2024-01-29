@@ -5,8 +5,14 @@ namespace PriceTracker.Services.Parser;
 
 public class DriverConfig
 {
+    private static IWebDriver? _driver;
+    
     public static IWebDriver GetConfiguredWebDriver()
     {
+        // if (_driver is not null)
+        //     return _driver;
+        
+        var commandTimeout = TimeSpan.FromSeconds(30);
         var options = new ChromeOptions();
         options.AddArgument("--no-sandbox");
         options.AddArgument("--headless");
@@ -16,8 +22,8 @@ public class DriverConfig
         
         var chromeDriverService = ChromeDriverService.CreateDefaultService();
         chromeDriverService.HideCommandPromptWindow = true;
-        var driver = new ChromeDriver(chromeDriverService, options);
-        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(4);
+        var driver = new ChromeDriver(chromeDriverService, options, commandTimeout);
+        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         return driver;
     }
 }

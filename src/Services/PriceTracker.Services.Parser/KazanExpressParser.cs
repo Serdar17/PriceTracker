@@ -24,7 +24,7 @@ namespace PriceTracker.Services.Parser
             HttpClient.DefaultRequestHeaders.Referrer = new Uri("https://kazanexpress.ru/");
         }
 
-        public async Task<ParseResult> ParseAsync(string url)
+        public async Task<ParseResult?> ParseAsync(string url)
         {
             var productParams = GetProductParams(url);
             var productIndex = productParams["productIndex"];
@@ -61,7 +61,7 @@ namespace PriceTracker.Services.Parser
                 return new ParseResult(title, price, cardPrice: 0.0);
             }
             else
-                return new ParseResult(title: null, price: 0.0, cardPrice: 0.0);
+                return null;
         }
 
         private static Dictionary<string, string?> GetProductParams(string url)

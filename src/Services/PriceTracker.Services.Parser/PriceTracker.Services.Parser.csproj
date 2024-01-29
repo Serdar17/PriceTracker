@@ -16,6 +16,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Domain\PriceTracker.Domain\PriceTracker.Domain.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\PriceTracker.Infrastructure.Context\PriceTracker.Infrastructure.Context.csproj" />
       <ProjectReference Include="..\..\Shared\PriceTracker.Common\PriceTracker.Common.csproj" />
     </ItemGroup>
 
