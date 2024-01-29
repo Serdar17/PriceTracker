@@ -16,6 +16,7 @@ public class UzumParser : IParser
 
     public async Task<ParseResult?> ParseAsync(string url)
     {
+        _logger.LogInformation("Starting {name} parsing", nameof(UzumParser));
         var driver = DriverConfig.GetConfiguredWebDriver();
         string title, currency;
         double price = 0.0, cardPrice = 0.0;
